@@ -15,3 +15,17 @@ antd
 ## Back-End
 
 koa2
+
+koa-router
+
+@koa/cors
+
+koa-body
+
+mongoose
+
+bcryptjs
+
+svg-captcha
+
+jsonwebtoken

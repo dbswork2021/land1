@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
 
-function App() {
+const { Header, Content } = Layout;
+
+export default function App() {
+  const [menuKey, setMenuKey] = useState('');
+  const location = useLocation();
+  useEffect(() => {
+    setMenuKey(location.pathname);
+  }, [location.pathname]);
+  const Logout = () => {
+    localStorage.removeItem('token');
+    window.location.reload();
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout className="content" style={{ height: '100vh' }}>
+      <Header style={{ width: '100%' }}>
+        <Menu theme="dark" mode="horizontal" selectedKeys={[menuKey]}>
+          <Menu.Item
+            key="logout"
+            style={{ marginLeft: 'auto', color: '#ffffff' }}
+          >
+            <p onClick={Logout}>退出登录</p>
+          </Menu.Item>
+        </Menu>
+      </Header>
+      <Content style={{ padding: '10px 30px', background: '#fff' }}>
+        <Outlet />
+      </Content>
+    </Layout>
   );
 }
-
-export default App;
