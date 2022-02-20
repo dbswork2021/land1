@@ -22,6 +22,8 @@ koa-router
 
 koa-body
 
+koa-static
+
 mongoose
 
 bcryptjs
