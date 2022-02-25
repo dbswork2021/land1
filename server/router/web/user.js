@@ -8,8 +8,6 @@ user.get('/', (ctx, next) => {
 
 user.put('/', async (ctx) => {
   const { id } = ctx.state.user;
-  console.log(ctx.request.body);
-
   await schema.findByIdAndUpdate(id, ctx.request.body);
   ctx.body = { message: '修改成功' };
 });
