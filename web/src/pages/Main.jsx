@@ -1,23 +1,33 @@
 import { useState, useEffect } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 
 const { Header, Content } = Layout;
 
-export default function App() {
+export default function Main() {
   const [menuKey, setMenuKey] = useState('');
-  const location = useLocation();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
-    setMenuKey(location.pathname);
-  }, [location.pathname]);
+    if (!localStorage.__web_token) {
+      navigate('/login');
+    }
+    setMenuKey(pathname);
+  }, [pathname]);
   const Logout = () => {
-    localStorage.removeItem('token');
-    window.location.reload();
+    localStorage.removeItem('__web_token');
+    navigate('/login');
   };
   return (
     <Layout className="content" style={{ height: '100vh' }}>
       <Header style={{ width: '100%' }}>
         <Menu theme="dark" mode="horizontal" selectedKeys={[menuKey]}>
+          <Menu.Item key="/">
+            <Link to="/">主页</Link>
+          </Menu.Item>
+          <Menu.Item key="user">
+            <Link to="user">用户中心</Link>
+          </Menu.Item>
           <Menu.Item
             key="logout"
             style={{ marginLeft: 'auto', color: '#ffffff' }}

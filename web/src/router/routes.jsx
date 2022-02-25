@@ -1,29 +1,33 @@
 import { lazy } from 'react';
-import App from 'App';
-import { Navigate } from 'react-router-dom';
+import Main from 'pages/Main';
 
 const Login = lazy(() => import('pages/Login'));
 const Register = lazy(() => import('pages/Register'));
 const Home = lazy(() => import('pages/Home'));
+const User = lazy(() => import('pages/User'));
 
-const Routes = (isLoggedIn) => [
+const Routes = () => [
   {
     path: '/',
-    element: isLoggedIn ? <App /> : <Navigate to="/login" />,
+    element: <Main />,
     children: [
       {
         index: true,
         element: <Home />,
       },
+      {
+        path: 'user',
+        element: <User />,
+      },
     ],
   },
   {
     path: '/login',
-    element: !isLoggedIn ? <Login /> : <Navigate to="/" />,
+    element: <Login />,
   },
   {
     path: '/register',
-    element: !isLoggedIn ? <Register /> : <Navigate to="/" />,
+    element: <Register />,
   },
 ];
 

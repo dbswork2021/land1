@@ -3,8 +3,15 @@ const user = new Router();
 const schema = require('../../model/web/user');
 
 user.get('/', (ctx, next) => {
-  ctx.assert(true, 400, 'sorry');
-  ctx.body = 'yes';
+  ctx.body = { ...ctx.state.user };
+});
+
+user.put('/', async (ctx) => {
+  const { id } = ctx.state.user;
+  console.log(ctx.request.body);
+
+  await schema.findByIdAndUpdate(id, ctx.request.body);
+  ctx.body = { message: '修改成功' };
 });
 
 module.exports = user;

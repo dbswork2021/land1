@@ -7,8 +7,8 @@ const http = axios.create({
 
 http.interceptors.request.use(
   (config) => {
-    if (localStorage.token) {
-      config.headers.Authorization = 'Bearer ' + localStorage.token;
+    if (localStorage.__web_token) {
+      config.headers.Authorization = 'Bearer ' + localStorage.__web_token;
     }
     return config;
   },
@@ -24,8 +24,10 @@ http.interceptors.response.use(
   (err) => {
     if (err.response.status === 401) {
       localStorage.removeItem('token');
-      if (window.location.hash.indexOf('register')) {
-        window.location.hash = '/login';
+      console.log(window.location.pathname.indexOf('login'));
+
+      if (window.location.pathname.indexOf('login') === -1) {
+        window.location.pathname = '/login';
       }
     }
     if (err.response.data) {

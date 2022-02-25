@@ -7,11 +7,15 @@ module.exports = async (ctx, next) => {
     ''
   );
 
-  assert(token, 401, '请先登录');
+  ctx.assert(token, 401, '请先登录');
 
-  ctx.state.user = jwt.verify(token, secret);
+  try {
+    ctx.state.user = jwt.verify(token, secret);
+  } catch (error) {
+    ctx.assert(false, 401, '登录过期，请重新登录！');
+  }
 
-  assert(ctx.state.user, 401, '请先登录');
+  ctx.assert(ctx.state.user, 401, '请先登录');
 
   await next();
 };

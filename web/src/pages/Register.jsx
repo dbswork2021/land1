@@ -8,7 +8,7 @@ const Register = () => {
   const onFinish = (values) => {
     RegisterApi(values).then((res) => {
       console.log(res);
-      localStorage.token = res.data.token;
+      localStorage.__web_token = res.data.token;
       window.location.reload();
     });
   };
