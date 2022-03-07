@@ -1,5 +1,7 @@
-import { Form, Input, Button, message } from 'antd';
-import { UserEditApi } from 'utils/api';
+import { Form, Input, Button } from 'antd';
+import { useEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
+import { UserApi, UserEditApi } from 'utils/api';
 
 const formItemLayout = {
   wrapperCol: {
@@ -9,15 +11,28 @@ const formItemLayout = {
 };
 const User = () => {
   const [form] = Form.useForm();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		UserApi().then((res) => {
+			form.setFieldsValue(res.data)
+		})
+	})
 
   const onFinish = (values) => {
     UserEditApi(values).then((res) => {
-      form.resetFields();
-      message.success(res.data.message);
+			localStorage.removeItem('__web_token')
+			navigate('/login')
     });
   };
   return (
     <Form {...formItemLayout} form={form} name="user" onFinish={onFinish}>
+      <Form.Item
+        name="id"
+				style={{display: 'none'}}
+      >
+        <Input />
+      </Form.Item>
       <Form.Item
         name="username"
         label="用户名"

@@ -7,9 +7,9 @@ user.get('/', (ctx, next) => {
 });
 
 user.put('/', async (ctx) => {
-  const { id } = ctx.state.user;
-  await schema.findByIdAndUpdate(id, ctx.request.body);
-  ctx.body = { message: '修改成功' };
+  const { id, username, password } = ctx.request.body;
+  const model = await schema.findByIdAndUpdate(id, {username, password}, { new: true});
+  ctx.body = { data: model,  message: '修改成功, 请重新登录' };
 });
 
 module.exports = user;

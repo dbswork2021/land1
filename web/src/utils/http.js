@@ -19,11 +19,14 @@ http.interceptors.request.use(
 
 http.interceptors.response.use(
   (res) => {
+		if (res.data.message) {
+			message.success(res.data.message)
+		}
     return res;
   },
   (err) => {
     if (err.response.status === 401) {
-      localStorage.removeItem('token');
+      localStorage.removeItem('__web_token');
       console.log(window.location.pathname.indexOf('login'));
 
       if (window.location.pathname.indexOf('login') === -1) {
