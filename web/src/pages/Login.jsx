@@ -3,13 +3,19 @@ import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import 'assets/css/login.css';
 import { LoginApi } from 'utils/api';
+import { useEffect } from 'react';
 
 const Login = () => {
   const navigate = useNavigate();
+	useEffect(() => {
+		if(localStorage.__web_token){
+			navigate('/admin')
+		}
+	})
   const onFinish = (values) => {
     LoginApi(values).then((res) => {
       localStorage.__web_token = res.data.token;
-      navigate('/');
+      navigate('/admin');
     });
   };
   return (

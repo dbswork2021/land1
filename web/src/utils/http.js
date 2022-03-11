@@ -25,17 +25,14 @@ http.interceptors.response.use(
     return res;
   },
   (err) => {
+    if (err.response.data) {
+      message.error(err.response.data);
+    }
     if (err.response.status === 401) {
       localStorage.removeItem('__web_token');
-      console.log(window.location.pathname.indexOf('login'));
-
       if (window.location.pathname.indexOf('login') === -1) {
         window.location.pathname = '/login';
       }
-    }
-    if (err.response.data) {
-      message.error(err.response.data);
-      return Promise.reject(err);
     }
     return Promise.reject(err);
   }

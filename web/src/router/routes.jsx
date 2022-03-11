@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import Index from 'pages/Index'
 import Main from 'pages/Main';
 
 const Login = lazy(() => import('pages/Login'));
@@ -9,6 +10,10 @@ const User = lazy(() => import('pages/User'));
 const Routes = () => [
   {
     path: '/',
+    element: <Index />,
+  },
+  {
+    path: '/admin',
     element: <Main />,
     children: [
       {
