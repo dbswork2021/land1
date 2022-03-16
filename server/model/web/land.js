@@ -1,11 +1,14 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema({
-	email: {type: String, trim: true},
-	whatsapp: {type: String, trim: true}
+const schema = new mongoose.Schema(
+  {
+    email: { type: String, trim: true },
+    whatsapp: { type: String, trim: true },
+    url: { type: String, trim: true },
+  },
+  {
+    versionKey: false,
+  }
+);
 
-},{
-		versionKey: false
-	})
-
-module.exports = mongoose.model('Land', schema)
+module.exports = mongoose.model('Land', schema);
